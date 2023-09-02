@@ -62,7 +62,7 @@ const getTokenBalance = async (request) => {
 
 const sendEther = async (request) => {
   const { amount, to, privKey, gasPrice, gasLimit } = request.body;
-  const amount_send = new BigNumber(parseInt(amount));
+  const amount_send = (amount * 10 ** 18).toString();
   const wallet = new ethers.Wallet(privKey);
   const address = wallet.address;
   const rawTx = {
