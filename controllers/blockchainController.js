@@ -83,14 +83,17 @@ const sendToken = async (request) => {
     request.body;
   const wallet = new ethers.Wallet(privKey);
   const address = wallet.address;
-  var arrayIndex = contractList.findIndex(function (item) {
-    return item.indexOf(contractAddress) !== -1;
-  });
-  var abi = abiList[arrayIndex];
+  const amount_send = (amount * 10 ** 18).toString();
+
+  // var arrayIndex = contractList.findIndex(function (item) {
+  //   return item.indexOf(contractAddress) !== -1;
+  // });
+  // return arrayIndex;
+  var abi = abiList[0];
   var jsonABI = JSON.parse(abi);
   const contract = new web3.eth.Contract(jsonABI, contractAddress);
   const contractRawTx = await contract.methods
-    .transfer(to, web3.utils.toHex(amount))
+    .transfer(to, web3.utils.toHex(amount_send))
     .encodeABI();
   const rawTx = {
     from: address.toLowerCase(),
