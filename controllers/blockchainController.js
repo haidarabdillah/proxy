@@ -72,6 +72,15 @@ const sendEther = async (request) => {
     gasPrice: gasPrice,
     gasLimit: web3.utils.toHex(gasLimit),
   };
+  // const rawTx = {
+  //   from: address,
+  //   to: to,
+  //   gasLimit: web3.utils.toHex(gasLimit),
+  //   value: ethers.utils.parseEther(amount),
+  //   maxPriorityFeePerGas: ethers.utils.parseUnits('5', 'gwei'),
+  //   maxFeePerGas: ethers.utils.parseUnits('20', 'gwei'),
+  // };
+
   const account = web3.eth.accounts.privateKeyToAccount(privKey);
   const signedTx = await account.signTransaction(rawTx);
   const txInfo = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
