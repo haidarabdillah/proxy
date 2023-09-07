@@ -93,6 +93,7 @@ const sendToken = async (request) => {
   const wallet = new ethers.Wallet(privKey);
   const address = wallet.address;
   const amount_send = (amount * 10 ** 18).toString();
+  // const weiAmount = ethers.utils.parseUnits(amount).toString();
 
   // var arrayIndex = contractList.findIndex(function (item) {
   //   return item.indexOf(contractAddress) !== -1;
@@ -102,7 +103,7 @@ const sendToken = async (request) => {
   var jsonABI = JSON.parse(abi);
   const contract = new web3.eth.Contract(jsonABI, contractAddress);
   const contractRawTx = await contract.methods
-    .transfer(to, web3.utils.toHex(amount_send))
+    .transfer(to, web3.utils.toHex(BigNumber(amount_send)))
     .encodeABI();
   const rawTx = {
     from: address.toLowerCase(),
@@ -165,7 +166,6 @@ const fetchBlock = async (request) => {
       } else {
         const lowerContract = contractList.map((value) => value.toLowerCase());
         var isListed = lowerContract.includes(to.toLowerCase());
-        console.log({ isListed: isListed, to: to });
         if (isListed) {
           // var arrayIndex = contractList.findIndex(function (item) {
           //   return item.indexOf(to) !== -1;
