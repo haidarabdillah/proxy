@@ -13,6 +13,14 @@ const InputDataDecoder = require('ethereum-input-data-decoder');
 const log = require('fastify-cli/log');
 const BigNumber = require('bignumber.js');
 
+function isValidAddress(address) {
+  try {
+    ethers.utils.getAddress(address);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
 const createAccount = async () => {
   const wallet = await ethers.Wallet.createRandom();
   return {
@@ -171,11 +179,11 @@ const fetchBlock = async (request) => {
           //   return item.indexOf(to) !== -1;
           // });
           var abi = abiList[0];
-          console.log(abi);
           const decoder = new InputDataDecoder(abi);
           let result = decoder.decodeData(data);
           let toaddress = '0x' + result.inputs[0];
-          if (typeof result.inputs[1] !== 'string') {
+          const valid = isValidAddress(toaddress);
+          if (valid && typeof result.inputs[1] !== 'string') {
             if (contract.includes(result.method)) {
               dt = {
                 txid: txid,
