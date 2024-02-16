@@ -13,6 +13,32 @@ const InputDataDecoder = require('ethereum-input-data-decoder');
 const log = require('fastify-cli/log');
 const BigNumber = require('bignumber.js');
 
+function selectRpcUrl(height) {
+  // Memastikan height memiliki nilai yang valid
+  if (typeof height !== 'number' || isNaN(height)) {
+    throw new Error('Height harus merupakan sebuah angka.');
+  }
+
+  // Mendeteksi RPC_URL berdasarkan height % 5
+  const rpcNumber = height % 5 + 1; // Ditambah 1 karena kita memiliki RPC_URL_1 hingga RPC_URL_5
+
+  switch (rpcNumber) {
+    case 1:
+      return process.env.RPC_URL_1;
+    case 2:
+      return process.env.RPC_URL_2;
+    case 3:
+      return process.env.RPC_URL_3;
+    case 4:
+      return process.env.RPC_URL_4;
+    case 5:
+      return process.env.RPC_URL_5;
+    default:
+      throw new Error('Tidak dapat menemukan RPC_URL yang sesuai.');
+  }
+}
+
+
 function isValidAddress(address) {
   try {
     ethers.utils.getAddress(address);
@@ -128,10 +154,15 @@ const sendToken = async (request) => {
 };
 
 const fetchBlock = async (request) => {
+
   const { height } = request.body;
+  const selectedRpcUrl = selectRpcUrl(height);
+  const gethConnect = new ethers.providers.JsonRpcProvider(selectedRpcUrl);
+  console.log(`Fetching block from ${selectedRpcUrl}`);
+  console.log(`Fetching block from ${height}`);
   var txs = [];
   const contract = ['transfer', 'transferFrom', 'mint', 'sendMultiSig'];
-  const block = await ethereum.getBlockWithTransactions(height);
+  const block = await gethConnect.getBlockWithTransactions(height);
   const transactions = block ? block.transactions : [];
   // const simpleTxs = transactions.map((tx) => {
   //   return {
