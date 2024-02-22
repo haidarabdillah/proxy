@@ -168,9 +168,14 @@ const fetchBlock = async (request) => {
   console.log(`Fetching block from URL ${selectedRpcUrl}`);
   console.log(`Fetching block from ${height}`);
   var txs = [];
+  
   const contract = ['transfer', 'transferFrom', 'mint', 'sendMultiSig'];
   const block = await gethConnect.getBlockWithTransactions(height);
   const transactions = block ? block.transactions : [];
+  if (height===36349208){
+    console.log("wooeeeeee TX");
+    console.log(transactions);
+  }
   // const simpleTxs = transactions.map((tx) => {
   //   return {
   //     txid: tx.hash,
