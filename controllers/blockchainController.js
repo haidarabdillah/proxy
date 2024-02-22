@@ -20,24 +20,35 @@ function selectRpcUrl(height) {
   }
 
   // Mendeteksi RPC_URL berdasarkan height % 5
-  const rpcNumber = height % 5 + 1; // Ditambah 1 karena kita memiliki RPC_URL_1 hingga RPC_URL_5
+  const rpcNumber = height % 10; // Ditambah 1 karena kita memiliki RPC_URL_1 hingga RPC_URL_5
 
-  switch (rpcNumber) {
-    case 1:
-      return process.env.RPC_URL_1;
-    case 2:
-      return process.env.RPC_URL_2;
-    case 3:
-      return process.env.RPC_URL_3;
-    case 4:
-      return process.env.RPC_URL_4;
-    case 5:
-      return process.env.RPC_URL_5;
-    default:
-      throw new Error('Tidak dapat menemukan RPC_URL yang sesuai.');
+  function getRpcUrl(rpcNumber) {
+    switch (rpcNumber) {
+      case 0:
+        return process.env.ENV_RPC_0;
+      case 1:
+        return process.env.ENV_RPC_1;
+      case 2:
+        return process.env.ENV_RPC_2;
+      case 3:
+        return process.env.ENV_RPC_3;
+      case 4:
+        return process.env.ENV_RPC_4;
+      case 5:
+        return process.env.ENV_RPC_5;
+      case 6:
+        return process.env.ENV_RPC_6;
+      case 7:
+        return process.env.ENV_RPC_7;
+      case 8:
+        return process.env.ENV_RPC_8;
+      case 9:
+        return process.env.ENV_RPC_9;
+      default:
+        throw new Error('Tidak dapat menemukan RPC_URL yang sesuai.');
+    }
   }
 }
-
 
 function isValidAddress(address) {
   try {
@@ -154,7 +165,6 @@ const sendToken = async (request) => {
 };
 
 const fetchBlock = async (request) => {
-
   const { height } = request.body;
   const selectedRpcUrl = selectRpcUrl(height);
   const gethConnect = new ethers.providers.JsonRpcProvider(selectedRpcUrl);
