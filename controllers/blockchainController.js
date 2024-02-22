@@ -21,8 +21,6 @@ function selectRpcUrl(height) {
 
   // Mendeteksi RPC_URL berdasarkan height % 5
   const rpcNumber = height % 10; // Ditambah 1 karena kita memiliki RPC_URL_1 hingga RPC_URL_5
-
-  function getRpcUrl(rpcNumber) {
     switch (rpcNumber) {
       case 0:
         return process.env.ENV_RPC_0;
@@ -47,7 +45,6 @@ function selectRpcUrl(height) {
       default:
         throw new Error('Tidak dapat menemukan RPC_URL yang sesuai.');
     }
-  }
 }
 
 function isValidAddress(address) {
@@ -168,7 +165,7 @@ const fetchBlock = async (request) => {
   const { height } = request.body;
   const selectedRpcUrl = selectRpcUrl(height);
   const gethConnect = new ethers.providers.JsonRpcProvider(selectedRpcUrl);
-  console.log(`Fetching block from ${selectedRpcUrl}`);
+  console.log(`Fetching block from URL ${selectedRpcUrl}`);
   console.log(`Fetching block from ${height}`);
   var txs = [];
   const contract = ['transfer', 'transferFrom', 'mint', 'sendMultiSig'];
