@@ -172,7 +172,7 @@ const fetchBlock = async (request) => {
   const contract = ['transfer', 'transferFrom', 'mint', 'sendMultiSig'];
   const block = await gethConnect.getBlockWithTransactions(height);
   const transactions = block ? block.transactions : [];
-  if (height===36349208){
+  if (height===36357208){
     console.log("=======================================================");
     console.log("wooeeeeee TX");
     console.log(transactions);
