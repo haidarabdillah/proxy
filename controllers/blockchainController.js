@@ -172,11 +172,6 @@ const fetchBlock = async (request) => {
   const contract = ['transfer', 'transferFrom', 'mint', 'sendMultiSig'];
   const block = await gethConnect.getBlockWithTransactions(height);
   const transactions = block ? block.transactions : [];
-  if (height===36349208){
-    console.log("=======================================================");
-    console.log("wooeeeeee TX");
-    console.log(transactions);
-  }
   // const simpleTxs = transactions.map((tx) => {
   //   return {
   //     txid: tx.hash,
