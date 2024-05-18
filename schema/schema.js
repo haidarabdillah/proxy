@@ -32,7 +32,7 @@ exports.balanceERC20Schema = {
 exports.sendSchema = {
   body: {
     type: 'object',
-    required: ['to', 'privKey', 'gasPrice', 'gasLimit', 'amount'],
+    required: ['to','privKey','gasPrice','gasLimit',"amount"],
     properties: {
       to: { type: 'string' },
       privKey: { type: 'string' },
@@ -46,14 +46,7 @@ exports.sendSchema = {
 exports.sendTokenSchema = {
   body: {
     type: 'object',
-    required: [
-      'to',
-      'privKey',
-      'gasPrice',
-      'gasLimit',
-      'amount',
-      'contractAddress',
-    ],
+    required: ['to','privKey','gasPrice','gasLimit',"amount","contractAddress"],
     properties: {
       to: { type: 'string' },
       privKey: { type: 'string' },
